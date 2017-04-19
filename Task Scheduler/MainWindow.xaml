@@ -1,9 +1,9 @@
 ﻿<Window x:Class="Task_Scheduler.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:models="clr-namespace:Task_Scheduler.Models"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Task Scheduler" Height="550" Width="925">
+
     <DockPanel LastChildFill="True" DataContext="{Binding Main, Source={StaticResource Locator}}">
 
         <ListBox DockPanel.Dock="Left" ItemsSource="{Binding TaskList}" DisplayMemberPath="Title"

@@ -15,7 +15,7 @@ namespace Task_Scheduler.ViewModel
         }
 
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
-
+        public MainViewModel MainGrid => ServiceLocator.Current.GetInstance<MainViewModel>();
        
         public static void Cleanup()
         {

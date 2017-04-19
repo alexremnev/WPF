@@ -12,10 +12,10 @@ namespace Task_Scheduler.Models
     {
         private string title;
         private string description;
-        private string state;
+        private StateMode state;
         private DateTime startDate;
         private DateTime endDate;
-        private string priority;
+        private PriorityMode priority;
 
         public string Title
         {
@@ -29,7 +29,7 @@ namespace Task_Scheduler.Models
             set { Set(() => Description, ref description, value); }
         }
 
-        public string State
+        public StateMode State
         {
             get { return state; }
             set { Set(() => State, ref state, value); }
@@ -47,7 +47,7 @@ namespace Task_Scheduler.Models
             set { Set(() => EndDate, ref endDate, value); }
         }
 
-        public string Priority
+        public PriorityMode Priority
         {
             get { return priority; }
             set { Set(() => Priority, ref priority, value); }
@@ -85,6 +85,15 @@ namespace Task_Scheduler.Models
 
             var formatter = new XmlSerializer(typeof(ObservableCollection<Task>));
 
+            using (var fs = new FileStream("Data.xml", FileMode.Truncate))
+            {
+                formatter.Serialize(fs, list);
+            }
+        }
+
+        public static void Update(ObservableCollection<Task> list)
+        {
+            var formatter = new XmlSerializer(typeof(ObservableCollection<Task>));
             using (var fs = new FileStream("Data.xml", FileMode.Truncate))
             {
                 formatter.Serialize(fs, list);
