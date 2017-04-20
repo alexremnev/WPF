@@ -4,13 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:Task_Scheduler.ViewModel"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:models="clr-namespace:Task_Scheduler.Models"
         mc:Ignorable="d"
         Title="GridWindow" Height="550" Width="925">
-    <Grid DataContext="{Binding Main, Source={StaticResource Locator}}" >
-        <DataGrid ItemsSource="{Binding TaskList}" AutoGenerateColumns="False">
+    <Window.Resources>
+        <models:HighlighterDateTimeConverter x:Key="HighlighterDateTimeConverter" />
+    </Window.Resources>
+    <DockPanel LastChildFill="True" DataContext="{Binding Main, Source={StaticResource Locator}}">
+        <DockPanel DockPanel.Dock="Bottom">
+            <Button DockPanel.Dock="Bottom" Content="Save changes" Width="100" Height="25"
+                    Command="{Binding UpdateCommand}" />
+            <Button Content="Add task" Width="100" Height="25"
+                    Command="{Binding AddRowCommand}" />
+        </DockPanel>
+        <DataGrid ItemsSource="{Binding TaskList}" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Title" Width="*" Binding="{Binding Title}"/>
+                <DataGridTextColumn Header="Title" Width="*" Binding="{Binding Title}" />
                 <DataGridTextColumn Header="Description" Width="*" Binding="{Binding Description}" />
                 <DataGridComboBoxColumn Header="Priority" Width="*"
                                         ItemsSource="{Binding Source={x:Static viewModel:MainViewModel.TaskState}}"
@@ -18,24 +27,32 @@
                 <DataGridTemplateColumn SortMemberPath="StartDate" Header="Start date" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding StartDate}"/>
+                            <TextBlock Text="{Binding StartDate}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <xctk:DateTimePicker Value="{Binding StartDate}"/>
+                            <DatePicker SelectedDate="{Binding StartDate}" DisplayDateStart="{Binding StartDate}"
+                                        DisplayDateEnd="{Binding EndDate}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn SortMemberPath="EndDate" Header="End date" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding EndDate}" />
+                            <TextBlock Text="{Binding EndDate}">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Background"
+                                                Value="{Binding EndDate, Converter={StaticResource HighlighterDateTimeConverter}}" />
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <xctk:DateTimePicker Value="{Binding EndDate}" />
+                            <DatePicker SelectedDate="{Binding EndDate}" DisplayDateStart="{Binding StartDate}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -44,7 +61,7 @@
                                         SelectedValueBinding="{Binding Priority}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Update" Width="100" Height="25"
-                    Command="{Binding UpdateCommand}" />
-    </Grid>
+
+        <!--    </Grid>-->
+    </DockPanel>
 </Window>

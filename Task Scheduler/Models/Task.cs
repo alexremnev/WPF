@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Xml.Serialization;
 using GalaSoft.MvvmLight;
 
 namespace Task_Scheduler.Models
@@ -44,60 +40,16 @@ namespace Task_Scheduler.Models
         public DateTime EndDate
         {
             get { return endDate; }
-            set { Set(() => EndDate, ref endDate, value); }
+            set
+            {
+                Set(() => EndDate, ref endDate, value);
+            }
         }
 
         public PriorityMode Priority
         {
             get { return priority; }
             set { Set(() => Priority, ref priority, value); }
-        }
-
-        public static ObservableCollection<Task> List()
-        {
-            ObservableCollection<Task> tasks;
-            var formatter = new XmlSerializer(typeof(ObservableCollection<Task>));
-
-            using (var fs = new FileStream("Data.xml", FileMode.OpenOrCreate))
-            {
-                tasks = (ObservableCollection<Task>) formatter.Deserialize(fs);
-            }
-            return tasks;
-        }
-
-        public static void Add(Task task)
-        {
-            var list = List();
-            list.Add(task);
-            var formatter = new XmlSerializer(typeof(ObservableCollection<Task>));
-
-            using (var fs = new FileStream("Data.xml", FileMode.OpenOrCreate))
-            {
-                formatter.Serialize(fs, list);
-            }
-        }
-
-        public static void Delete(Task task)
-        {
-            var list = List();
-            var selectedtask = list.First(x => x.Title == task.Title);
-            list.Remove(selectedtask);
-
-            var formatter = new XmlSerializer(typeof(ObservableCollection<Task>));
-
-            using (var fs = new FileStream("Data.xml", FileMode.Truncate))
-            {
-                formatter.Serialize(fs, list);
-            }
-        }
-
-        public static void Update(ObservableCollection<Task> list)
-        {
-            var formatter = new XmlSerializer(typeof(ObservableCollection<Task>));
-            using (var fs = new FileStream("Data.xml", FileMode.Truncate))
-            {
-                formatter.Serialize(fs, list);
-            }
         }
     }
 }

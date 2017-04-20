@@ -1,4 +1,4 @@
-﻿using Xceed.Wpf.Toolkit;
+﻿using System.Windows;
 
 namespace Task_Scheduler
 {
@@ -7,7 +7,7 @@ namespace Task_Scheduler
         private GridWindow()
         {
             InitializeComponent();
-        }
+          }
 
         private static GridWindow instance;
         public static GridWindow Instance => instance ?? (instance = new GridWindow());

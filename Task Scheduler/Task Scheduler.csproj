@@ -103,9 +103,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\HighlighterDateTimeConverter.cs" />
     <Compile Include="Models\PriorityMode.cs" />
+    <Compile Include="Models\TaskRepository.cs" />
     <Compile Include="Models\StateMode.cs" />
     <Compile Include="Models\Task.cs" />
+    <Compile Include="Service\TaskService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="GridWindow.xaml.cs">
